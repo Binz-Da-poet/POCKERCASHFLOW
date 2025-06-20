@@ -1,0 +1,371 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Poker Theme Design System */
+:root {
+  /* Spacing system */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Border radius system */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+
+  /* Font system */
+  font-family: 'Inter', 'Noto Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Poker color scheme */
+  color-scheme: dark;
+  color: #f5f5f4;
+  background-color: #1c1917;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: #f5f5f4;
+  background:
+    radial-gradient(circle at 25% 25%, #277d4a 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, #166534 0%, transparent 50%),
+    linear-gradient(135deg, #1c1917 0%, #0c2417 50%, #1c1917 100%);
+  background-attachment: fixed;
+}
+
+/* Poker Component Styles */
+@layer components {
+  .card {
+    @apply bg-poker-800/90 backdrop-blur-xl border border-gold-500/20 rounded-2xl shadow-poker-table;
+  }
+
+  .card-elevated {
+    @apply bg-poker-700/95 backdrop-blur-xl border border-gold-400/30 rounded-2xl shadow-strong;
+  }
+
+  .poker-table {
+    @apply bg-gradient-to-br from-felt-800 via-felt-700 to-felt-800 border-4 border-gold-600 rounded-3xl shadow-poker-table;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-poker-900 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-medium hover:shadow-glow-green focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-poker-600 hover:bg-poker-500 text-secondary-100 border border-poker-500 hover:border-poker-400 focus:ring-poker-500 shadow-soft;
+  }
+
+  .btn-success {
+    @apply btn bg-gradient-to-r from-success-600 to-success-700 hover:from-success-700 hover:to-success-800 text-white shadow-medium hover:shadow-glow-green focus:ring-success-500;
+  }
+
+  .btn-warning {
+    @apply btn bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-poker-900 shadow-medium hover:shadow-glow-gold focus:ring-gold-500;
+  }
+
+  .btn-danger {
+    @apply btn bg-gradient-to-r from-danger-600 to-danger-700 hover:from-danger-700 hover:to-danger-800 text-white shadow-medium hover:shadow-glow-red focus:ring-danger-500;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 bg-poker-800/80 border border-gold-500/30 rounded-xl text-secondary-100 placeholder-secondary-400 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-all duration-200 shadow-soft;
+  }
+
+  .input-error {
+    @apply input border-danger-400/50 focus:ring-danger-500;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-full shadow-soft;
+  }
+
+  .badge-success {
+    @apply badge bg-gradient-to-r from-success-500 to-success-600 text-white;
+  }
+
+  .badge-warning {
+    @apply badge bg-gradient-to-r from-gold-500 to-gold-600 text-poker-900;
+  }
+
+  .badge-danger {
+    @apply badge bg-gradient-to-r from-danger-500 to-danger-600 text-white;
+  }
+
+  .badge-primary {
+    @apply badge bg-gradient-to-r from-primary-500 to-primary-600 text-white;
+  }
+
+  .glass {
+    @apply bg-poker-800/30 backdrop-blur-xl border border-gold-500/20;
+  }
+
+  .glass-strong {
+    @apply bg-poker-700/50 backdrop-blur-xl border border-gold-400/30;
+  }
+
+  .chip-style {
+    @apply rounded-full shadow-chip border-2;
+  }
+}
+
+/* Poker Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-secondary-100 font-bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl;
+}
+h2 {
+  @apply text-2xl md:text-3xl lg:text-4xl;
+}
+h3 {
+  @apply text-xl md:text-2xl lg:text-3xl;
+}
+h4 {
+  @apply text-lg md:text-xl lg:text-2xl;
+}
+h5 {
+  @apply text-base md:text-lg lg:text-xl;
+}
+h6 {
+  @apply text-sm md:text-base lg:text-lg;
+}
+
+p,
+span,
+div,
+label {
+  @apply text-secondary-200;
+}
+
+/* Links */
+a {
+  @apply text-gold-400 hover:text-gold-300 font-semibold transition-colors duration-200;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary-300 hover:bg-secondary-400 rounded-full;
+}
+
+/* Poker Animation Utilities */
+.animate-entrance {
+  animation: entrance 0.6s ease-out;
+}
+
+@keyframes entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover animations */
+.hover-lift {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(234, 179, 8, 0.6);
+  transform: scale(1.05);
+}
+
+.hover-flip {
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.hover-flip:hover {
+  transform: rotateY(180deg);
+}
+
+/* Interactive animations */
+.click-bounce {
+  transition: transform 0.1s ease;
+}
+
+.click-bounce:active {
+  transform: scale(0.95);
+}
+
+.pulse-on-hover {
+  transition: all 0.3s ease;
+}
+
+.pulse-on-hover:hover {
+  animation: pulseGlow 1s ease-in-out infinite;
+}
+
+/* Stagger animations for lists */
+.stagger-fade-in > * {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-fade-in > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger-fade-in > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger-fade-in > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger-fade-in > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger-fade-in > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.stagger-fade-in > *:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.stagger-slide-up > * {
+  opacity: 0;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.stagger-slide-up > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.stagger-slide-up > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.stagger-slide-up > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.stagger-slide-up > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.stagger-slide-up > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* Poker-specific animations */
+.card-flip-enter {
+  animation: flipIn 0.6s ease-out;
+}
+
+.chip-stack-enter {
+  animation: chipFlip 0.8s ease-out;
+}
+
+.money-enter {
+  animation: moneyRain 1.2s ease-out;
+}
+
+.casino-title {
+  animation: casinoNeon 3s ease-in-out infinite;
+}
+
+.suit-icon {
+  animation: suitDance 2s ease-in-out infinite;
+}
+
+/* Loading animations */
+.loading-dots::after {
+  content: '';
+  animation: loadingDots 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingDots {
+  0%,
+  20% {
+    content: '';
+  }
+  40% {
+    content: '.';
+  }
+  60% {
+    content: '..';
+  }
+  80%,
+  100% {
+    content: '...';
+  }
+}
+
+/* Page transition animations */
+.page-enter {
+  animation: slideUp 0.5s ease-out;
+}
+
+.page-exit {
+  animation: slideDown 0.3s ease-in;
+}
+
+/* Button press effect */
+.btn-press {
+  transition: all 0.1s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.98) translateY(2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Focus improvements */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .btn {
+    @apply px-3 py-2 text-sm;
+  }
+
+  .input {
+    @apply px-3 py-2.5 text-sm;
+  }
+}

@@ -1,0 +1,31 @@
+/* App-specific styles với font màu đen */
+.App {
+  color: #000000;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+/* Đảm bảo tất cả text trong app có màu đen */
+.App * {
+  color: #000000;
+}
+
+/* Chỉ cho phép một số element có màu khác (cho UI/UX tốt hơn) */
+.App .text-blue-600 {
+  color: #2563eb !important;
+}
+.App .text-green-600 {
+  color: #16a34a !important;
+}
+.App .text-red-600 {
+  color: #dc2626 !important;
+}
+.App .text-yellow-600 {
+  color: #ca8a04 !important;
+}
+.App .text-gray-600 {
+  color: #4b5563 !important;
+}
+.App .text-white {
+  color: #ffffff !important;
+}
