@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  poker-app:
+    build: .
+    container_name: poker-cashflow
+    ports:
+      - '80:80'
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - poker-network
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.poker.rule=Host(`your-domain.com`)'
+      - 'traefik.http.services.poker.loadbalancer.server.port=80'
+
+networks:
+  poker-network:
+    driver: bridge
