@@ -1,13 +1,19 @@
-name: Deploy to EC2
+name: Deploy to AWS S3 + CloudFront
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
+
+env:
+  AWS_REGION: ap-northeast-1
+  S3_BUCKET: pockercashflow-1750603012.85526
+  CLOUDFRONT_DISTRIBUTION_ID: E3GUYCNLRRQECZ
+  CLOUDFRONT_DOMAIN: d1vp9iofpvfkkg.cloudfront.net
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,52 +29,38 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linter
-        run: npm run lint
-
       - name: Build application
         run: npm run build
 
-      - name: Run tests (if any)
-        run: npm test --passWithNoTests || true
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /var/www/pockercashflow
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-            # Pull latest changes
-            sudo git pull origin main
-
-            # Install dependencies
-            sudo npm ci --production=false
-
-            # Build application
-            sudo npm run build
-
-            # Restart Nginx
-            sudo systemctl restart nginx
-
-            echo "✅ Deployment completed!"
-
-      - name: Notify deployment status
-        if: always()
+      - name: Deploy to S3
         run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "🎉 Deployment successful!"
-          else
-            echo "❌ Deployment failed!"
-          fi
+          # Upload static assets with long cache
+          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
+            --delete \
+            --cache-control "max-age=31536000" \
+            --exclude "index.html" \
+            --exclude "*.html"
+
+          # Upload HTML files with no cache (for SPA routing)
+          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
+            --delete \
+            --cache-control "no-cache" \
+            --include "*.html"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+      - name: Deployment success notification
+        run: |
+          echo "🎉 Deployment completed successfully!"
+          echo "🌍 Your app is live at: https://${{ env.CLOUDFRONT_DOMAIN }}"

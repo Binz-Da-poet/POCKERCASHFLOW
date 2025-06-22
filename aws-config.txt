@@ -1,0 +1,15 @@
+﻿# AWS Configuration for Poker Cash Flow App
+BUCKET_NAME=pockercashflow-1750603012.85526
+REGION=ap-northeast-1
+DISTRIBUTION_ID=MANUAL_SETUP_REQUIRED
+CLOUDFRONT_DOMAIN=MANUAL_SETUP_REQUIRED
+S3_WEBSITE_URL=http://pockercashflow-1750603012.85526.s3-website-ap-northeast-1.amazonaws.com
+CLOUDFRONT_URL=https://MANUAL_SETUP_REQUIRED
+
+# Estimated Monthly Costs (for 1-2 visits/day):
+# - S3 Storage + Requests: ~.03
+# - CloudFront: ~.50-1.00
+# - Total: ~.53-1.03/month
+
+# Future deployment:
+# powershell -ExecutionPolicy Bypass -File deploy.ps1

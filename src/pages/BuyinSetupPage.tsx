@@ -6,7 +6,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
-import { formatMoney, isValidPositiveNumber } from '../utils/formatters'
+import { isValidPositiveNumber } from '../utils/formatters'
 import { DollarSign, ArrowRight, Plus } from 'lucide-react'
 import BuyInBg from '../assets/background/BuyIn.png'
 
@@ -81,10 +81,10 @@ export const BuyinSetupPage: React.FC = () => {
 
         {/* Main Content Modal - Responsive positioning */}
         <div className='flex-1 flex items-center justify-center px-4 py-4'>
-          <div className='w-full max-w-sm md:max-w-md'>
-            <div className='bg-black/75 md:bg-black/65 backdrop-blur-sm border-3 md:border-4 border-yellow-500 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden transform hover:scale-105 transition-all duration-300'>
+          <div className='w-full max-w-xs md:max-w-md'>
+            <div className='bg-black/10 md:bg-black/20 backdrop-blur-xs md:backdrop-blur-sm border-2 md:border-4 border-yellow-500/70 md:border-yellow-500 rounded-xl md:rounded-3xl p-4 md:p-8 shadow-lg md:shadow-2xl relative overflow-hidden transform hover:scale-105 transition-all duration-300'>
               {/* Animated gold border glow */}
-              <div className='absolute inset-0 bg-gradient-to-r from-yellow-400/25 via-transparent to-yellow-400/25 rounded-2xl md:rounded-3xl animate-pulse'></div>
+              <div className='absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-transparent to-yellow-400/10 rounded-2xl md:rounded-3xl animate-pulse'></div>
 
               <div className='relative z-10'>
                 {/* Gold Coin Icon - Responsive size */}
