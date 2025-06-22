@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
 import { isValidPositiveNumber } from '../utils/formatters'
 import { DollarSign, ArrowRight, Plus } from 'lucide-react'
-import BuyInBg from '../assets/background/BuyIn.png'
+import BuyInBg from '../assets/background/buyIn.png'
 
 export const BuyinSetupPage: React.FC = () => {
   const navigate = useNavigate()
