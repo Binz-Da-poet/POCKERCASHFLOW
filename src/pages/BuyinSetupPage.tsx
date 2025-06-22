@@ -40,15 +40,12 @@ export const BuyinSetupPage: React.FC = () => {
 
   return (
     <div
-      className='min-h-screen relative overflow-hidden bg-no-repeat'
+      className='min-h-screen relative overflow-hidden'
       style={{
-        backgroundImage: `url(${BuyInBg})`,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center center',
-        backgroundColor: '#8B4513' // Màu nâu casino để fill khoảng trống
+        backgroundColor: '#8B4513' // Màu nâu casino
       }}
     >
-      {/* Overlay nhẹ để text dễ đọc nhưng vẫn thấy rõ background */}
+      {/* Overlay nhẹ */}
       <div className='absolute inset-0 bg-gradient-to-b from-black/50 via-transparent via-40% to-black/30'></div>
 
       <div className='relative z-10 min-h-screen flex flex-col'>
@@ -76,6 +73,18 @@ export const BuyinSetupPage: React.FC = () => {
             <p className='text-sm md:text-base lg:text-lg text-yellow-200 font-bold'>
               hôm nay mình định chơi bao nhiêu thế bồ tèo nhập tiền đê :))
             </p>
+          </div>
+
+          {/* Buy-in Background Image - Positioned right below subtitle */}
+          <div className='mt-1 md:mt-6 flex justify-center'>
+            <div className='relative'>
+              <img
+                src={BuyInBg}
+                alt='Buy-in Background'
+                className='w-100 md:w-80 lg:w-96 h-auto opacity-60 rounded-lg shadow-2xl'
+              />
+              <div className='absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg'></div>
+            </div>
           </div>
         </div>
 
