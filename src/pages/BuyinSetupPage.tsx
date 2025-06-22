@@ -7,7 +7,7 @@ import React, { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
 import { isValidPositiveNumber } from '../utils/formatters'
-import { DollarSign, ArrowRight, Plus } from 'lucide-react'
+import { DollarSign, ArrowRight, Plus, Wallet } from 'lucide-react'
 import BuyInBg from '../assets/background/buyIn.png'
 
 export const BuyinSetupPage: React.FC = () => {
@@ -16,6 +16,7 @@ export const BuyinSetupPage: React.FC = () => {
   const [inputValue, setInputValue] = React.useState(() =>
     gameState.buyinAmount > 0 ? gameState.buyinAmount.toString() : '500'
   )
+  const [showModal, setShowModal] = React.useState(false)
 
   const handleNext = useCallback(() => {
     const amount = parseInt(inputValue)
@@ -35,6 +36,14 @@ export const BuyinSetupPage: React.FC = () => {
     const currentAmount = parseInt(inputValue) || 0
     setInputValue((currentAmount + 100).toString())
   }, [inputValue])
+
+  const handleShowModal = useCallback(() => {
+    setShowModal(true)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false)
+  }, [])
 
   const isValid = useMemo(() => isValidPositiveNumber(inputValue) && parseInt(inputValue) > 0, [inputValue])
 
@@ -88,79 +97,121 @@ export const BuyinSetupPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Content Modal - Responsive positioning */}
-        <div className='flex-1 flex items-center justify-center px-4 py-4'>
-          <div className='w-full max-w-xs md:max-w-md'>
-            <div className='bg-black/10 md:bg-black/20 backdrop-blur-xs md:backdrop-blur-sm border-2 md:border-4 border-yellow-500/70 md:border-yellow-500 rounded-xl md:rounded-3xl p-4 md:p-8 shadow-lg md:shadow-2xl relative overflow-hidden transform hover:scale-105 transition-all duration-300'>
-              {/* Animated gold border glow */}
-              <div className='absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-transparent to-yellow-400/10 rounded-2xl md:rounded-3xl animate-pulse'></div>
+        {/* Main Content - Show button or modal based on state */}
+        <div className='flex-1 flex items-center justify-center px-0 py-0'>
+          {!showModal ? (
+            /* Buy-in Button - Show initially */
+            <div className='text-center'>
+              <button
+                onClick={handleShowModal}
+                className='bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-gray-900 font-black text-xl md:text-2xl py-4 md:py-6 px-8 md:px-12 rounded-2xl md:rounded-3xl border-4 border-yellow-300 shadow-2xl transform hover:scale-110 transition-all duration-300 active:scale-95 hover:shadow-yellow-500/80 uppercase tracking-wider'
+                style={{
+                  textShadow: '2px 2px 0px rgba(0,0,0,0.3)',
+                  letterSpacing: '2px'
+                }}
+              >
+                <span className='inline-flex items-center justify-center gap-3'>
+                  <Wallet className='w-6 md:w-8 h-6 md:h-8' />
+                  💰 NHẬP TIỀN BUY-IN
+                  <Wallet className='w-6 md:w-8 h-6 md:h-8' />
+                </span>
+              </button>
 
-              <div className='relative z-10'>
-                {/* Gold Coin Icon - Responsive size */}
-                <div className='text-center mb-4 md:mb-6'>
-                  <div className='inline-flex items-center justify-center w-16 md:w-20 h-16 md:h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full shadow-2xl border-3 md:border-4 border-yellow-300 animate-bounce'>
-                    <DollarSign className='w-8 md:w-10 h-8 md:h-10 text-gray-900 font-black' />
-                  </div>
-                </div>
-
-                {/* Label - Responsive */}
-                <div className='text-center mb-4 md:mb-6'>
-                  <label className='text-yellow-400 text-lg md:text-xl font-bold uppercase tracking-widest drop-shadow-lg'>
-                    💰 SỐ TIỀN BUY-IN
-                  </label>
-                </div>
-
-                {/* Input Container - Responsive */}
-                <div className='mb-4 md:mb-6'>
-                  <div className='relative'>
-                    <input
-                      type='number'
-                      inputMode='numeric'
-                      pattern='[0-9]*'
-                      value={inputValue}
-                      onChange={handleInputChange}
-                      className='w-full bg-gray-900/85 border-2 md:border-3 border-yellow-500 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 text-2xl md:text-3xl font-black text-yellow-400 text-center focus:outline-none focus:border-yellow-300 focus:ring-4 focus:ring-yellow-500/70 transition-all duration-300 hover:shadow-yellow-500/50 hover:shadow-xl backdrop-blur-sm'
-                      placeholder='500'
-                      min='1'
-                      autoFocus
-                    />
-                  </div>
-                </div>
-
-                {/* +100円 Button - Responsive */}
-                <div className='text-center mb-4 md:mb-6'>
-                  <button
-                    onClick={handleAdd500}
-                    className='bg-gradient-to-r from-red-600/95 to-red-700/95 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold py-2 md:py-3 px-6 md:px-8 rounded-full border-2 border-red-400 shadow-lg transform hover:scale-110 transition-all duration-200 active:scale-95 hover:shadow-red-500/50 backdrop-blur-sm'
-                  >
-                    <Plus className='w-4 md:w-5 h-4 md:h-5 inline mr-2' />
-                    100円
-                  </button>
-                </div>
-
-                {/* Next Button - Responsive */}
-                <button
-                  type='button'
-                  onClick={handleNext}
-                  disabled={!isValid}
-                  className={`w-full py-3 md:py-4 text-lg md:text-2xl font-black uppercase rounded-xl md:rounded-2xl border-3 md:border-4 shadow-2xl transform transition-all duration-300 backdrop-blur-sm ${
-                    isValid
-                      ? 'bg-gradient-to-r from-red-600/95 to-red-700/95 hover:from-red-500 hover:to-red-600 border-red-400 text-yellow-300 hover:scale-105 active:scale-95 cursor-pointer shadow-red-500/60 hover:shadow-red-500/80'
-                      : 'bg-gray-700/85 border-gray-500 text-gray-400 cursor-not-allowed'
-                  }`}
-                  style={{
-                    textShadow: isValid ? '2px 2px 0px #000' : 'none',
-                    letterSpacing: '1px'
-                  }}
-                >
-                  <span className='inline-flex items-center justify-center gap-2 md:gap-3'>
-                    🎯 TIẾP THEO
-                    <ArrowRight className='w-5 md:w-6 h-5 md:h-6' />
-                  </span>
-                </button>
+              {/* Animated hint text */}
+              <div className='mt-4 animate-bounce'>
+                <p className='text-yellow-300 text-sm md:text-base font-bold opacity-80'>
+                  👆 Nhấn để bắt đầu nhập số tiền!
+                </p>
               </div>
             </div>
-          </div>
+          ) : (
+            /* Modal - Show when button is clicked - Fixed center position */
+            <div className='fixed inset-0 z-50 flex items-center justify-center p-4'>
+              {/* Modal backdrop */}
+              <div className='absolute inset-0 bg-black/60 backdrop-blur-sm' onClick={handleCloseModal}></div>
+
+              {/* Modal content */}
+              <div className='relative w-full max-w-xs md:max-w-md'>
+                <div className='bg-black/20 md:bg-black/30 backdrop-blur-sm border-2 md:border-4 border-yellow-500/70 md:border-yellow-500 rounded-xl md:rounded-3xl p-4 md:p-8 shadow-lg md:shadow-2xl relative overflow-hidden transform hover:scale-105 transition-all duration-300'>
+                  {/* Close button */}
+                  <button
+                    onClick={handleCloseModal}
+                    className='absolute top-2 md:top-4 right-2 md:right-4 text-yellow-400 hover:text-yellow-300 text-2xl md:text-3xl font-bold z-20 w-8 md:w-10 h-8 md:h-10 flex items-center justify-center rounded-full hover:bg-black/30 transition-all duration-200'
+                  >
+                    ×
+                  </button>
+
+                  {/* Animated gold border glow */}
+                  <div className='absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-transparent to-yellow-400/10 rounded-2xl md:rounded-3xl animate-pulse'></div>
+
+                  <div className='relative z-10'>
+                    {/* Gold Coin Icon - Responsive size */}
+                    <div className='text-center mb-4 md:mb-6'>
+                      <div className='inline-flex items-center justify-center w-16 md:w-20 h-16 md:h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full shadow-2xl border-3 md:border-4 border-yellow-300 animate-bounce'>
+                        <DollarSign className='w-8 md:w-10 h-8 md:h-10 text-gray-900 font-black' />
+                      </div>
+                    </div>
+
+                    {/* Label - Responsive */}
+                    <div className='text-center mb-4 md:mb-6'>
+                      <label className='text-yellow-400 text-lg md:text-xl font-bold uppercase tracking-widest drop-shadow-lg'>
+                        💰 SỐ TIỀN BUY-IN
+                      </label>
+                    </div>
+
+                    {/* Input Container - Responsive */}
+                    <div className='mb-4 md:mb-6'>
+                      <div className='relative'>
+                        <input
+                          type='number'
+                          inputMode='numeric'
+                          pattern='[0-9]*'
+                          value={inputValue}
+                          onChange={handleInputChange}
+                          className='w-full bg-gray-900/85 border-2 md:border-3 border-yellow-500 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 text-2xl md:text-3xl font-black text-yellow-400 text-center focus:outline-none focus:border-yellow-300 focus:ring-4 focus:ring-yellow-500/70 transition-all duration-300 hover:shadow-yellow-500/50 hover:shadow-xl backdrop-blur-sm'
+                          placeholder='500'
+                          min='1'
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+
+                    {/* +100円 Button - Responsive */}
+                    <div className='text-center mb-4 md:mb-6'>
+                      <button
+                        onClick={handleAdd500}
+                        className='bg-gradient-to-r from-red-600/95 to-red-700/95 hover:from-red-500 hover:to-red-600 text-yellow-300 font-bold py-2 md:py-3 px-6 md:px-8 rounded-full border-2 border-red-400 shadow-lg transform hover:scale-110 transition-all duration-200 active:scale-95 hover:shadow-red-500/50 backdrop-blur-sm'
+                      >
+                        <Plus className='w-4 md:w-5 h-4 md:h-5 inline mr-2' />
+                        100円
+                      </button>
+                    </div>
+
+                    {/* Next Button - Responsive */}
+                    <button
+                      type='button'
+                      onClick={handleNext}
+                      disabled={!isValid}
+                      className={`w-full py-3 md:py-4 text-lg md:text-2xl font-black uppercase rounded-xl md:rounded-2xl border-3 md:border-4 shadow-2xl transform transition-all duration-300 backdrop-blur-sm ${
+                        isValid
+                          ? 'bg-gradient-to-r from-red-600/95 to-red-700/95 hover:from-red-500 hover:to-red-600 border-red-400 text-yellow-300 hover:scale-105 active:scale-95 cursor-pointer shadow-red-500/60 hover:shadow-red-500/80'
+                          : 'bg-gray-700/85 border-gray-500 text-gray-400 cursor-not-allowed'
+                      }`}
+                      style={{
+                        textShadow: isValid ? '2px 2px 0px #000' : 'none',
+                        letterSpacing: '1px'
+                      }}
+                    >
+                      <span className='inline-flex items-center justify-center gap-2 md:gap-3'>
+                        🎯 TIẾP THEO
+                        <ArrowRight className='w-5 md:w-6 h-5 md:h-6' />
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Floating poker symbols - Hide on mobile for cleaner look */}
