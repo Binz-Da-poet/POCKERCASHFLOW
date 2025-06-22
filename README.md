@@ -1,10 +1,9 @@
 # 🃏 Poker Cash Flow Tracker
 
-**Professional poker cash game management tool** với global CDN deployment và ultra-low cost optimization.
+**Professional poker cash game management tool** - Ứng dụng quản lý game poker cash chuyên nghiệp với giao diện hiện đại.
 
 [![Live Demo](https://img.shields.io/badge/🌍_Live_Demo-HTTPS-green)](https://d1vp9iofpvfkkg.cloudfront.net)
-[![Cost](https://img.shields.io/badge/💰_Monthly_Cost-$0.05-brightgreen)](./AWS-COST-OPTIMIZATION.md)
-[![Deployment](https://img.shields.io/badge/🚀_Auto_Deploy-GitHub_Actions-blue)](./CI-CD-SETUP.md)
+[![GitHub Actions](https://img.shields.io/badge/🚀_Auto_Deploy-GitHub_Actions-blue)](./.github/workflows/deploy.yml)
 
 ## 🎯 **Features**
 
@@ -49,6 +48,10 @@ npm run dev
 # Build for production
 npm run build
 
+# Preview production build
+npm run preview
+```
+
 ## 🌍 **Live Application**
 
 **🔗 HTTPS URL:** https://d1vp9iofpvfkkg.cloudfront.net
@@ -63,45 +66,47 @@ npm run build
 ## 📁 **Project Structure**
 
 ```
-
 src/
-├── components/ # Reusable UI components
-│ ├── AnimatedCard.tsx
-│ ├── ChipDisplay.tsx
-│ └── ChipTransferModal.tsx
-├── pages/ # Game phase screens
-│ ├── BuyinSetupPage.tsx
-│ ├── ChipValuesSetupPage.tsx
-│ ├── GamePlayingPage.tsx
-│ └── FinalResultsPage.tsx
-├── hooks/ # Custom React hooks
-│ └── useGameState.tsx
-├── types/ # TypeScript definitions
-└── utils/ # Helper functions
-
+├── components/           # Reusable UI components
+│   ├── AnimatedCard.tsx
+│   ├── ChipDisplay.tsx
+│   ├── ChipTransferModal.tsx
+│   └── NotificationToast.tsx
+├── pages/               # Game phase screens
+│   ├── BuyinSetupPage.tsx
+│   ├── ChipValuesSetupPage.tsx
+│   ├── PlayersSetupPage.tsx
+│   ├── GamePlayingPage.tsx
+│   ├── FinalChipsInputPage.tsx
+│   └── FinalResultsPage.tsx
+├── hooks/               # Custom React hooks
+│   └── useGameState.tsx
+├── types/               # TypeScript definitions
+│   ├── gameState.tsx
+│   ├── playerTypes.tsx
+│   ├── chipTypes.tsx
+│   └── transactionTypes.tsx
+├── utils/               # Helper functions
+│   └── formatters.tsx
+├── layouts/             # Layout components
+│   └── MainLayout.tsx
+├── routes/              # Routing configuration
+│   └── index.tsx
+└── assets/              # Static assets
+    ├── chip/            # Chip images
+    └── background/      # Background images
 ```
 
 ## 🌩️ **AWS Architecture**
 
 ```
-
-┌─────────────┐ ┌──────────────┐ ┌─────────────┐
-│ Browser │───▶│ CloudFront │───▶│ S3 Bucket │
-│ (Users) │ │ (Global CDN)│ │ (Static) │
-└─────────────┘ └──────────────┘ └─────────────┘
-HTTPS HTTPS Private
-d1vp9iofpvfkkg.cloudfront.net pockercashflow-xxx
-
-````
-
-### **2. Auto-Deploy with CI/CD**
-
-```bash
-# Setup GitHub Actions (one-time)
-# See: CI-CD-SETUP.md
-
-git push origin main  # Triggers auto-deployment
-````
+┌─────────────┐    ┌──────────────┐    ┌─────────────┐
+│   Browser   │───▶│  CloudFront  │───▶│  S3 Bucket  │
+│   (Users)   │    │ (Global CDN) │    │  (Static)   │
+└─────────────┘    └──────────────┘    └─────────────┘
+     HTTPS              HTTPS             Private
+d1vp9iofpvfkkg.cloudfront.net    pockercashflow-xxx
+```
 
 ## 🛠️ **Development**
 
@@ -121,8 +126,33 @@ npm run lint         # Run ESLint
 npm run type-check   # TypeScript type checking
 ```
 
+### **Key Components**
+
+- **useGameState Hook** - Centralized state management for game data
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **TypeScript** - Full type safety throughout the application
+- **Vite** - Fast development and optimized production builds
+
+## 🎮 **Game Phases**
+
+1. **Buy-in Setup** - Set initial buy-in amounts
+2. **Players Setup** - Add player names and details
+3. **Chip Values** - Configure chip denominations
+4. **Game Playing** - Track live chip transfers
+5. **Final Chips** - Input final chip counts
+6. **Results** - Calculate and display final profits/losses
+
+## 🚀 **Deployment**
+
+The application is automatically deployed to AWS S3 + CloudFront via GitHub Actions when code is pushed to the main branch.
+
+**Live URL:** https://d1vp9iofpvfkkg.cloudfront.net
+
 ## 📞 **Support**
 
 - **📧 Contact:** trannhanhau12061998@gmail.com
+- **🐛 Issues:** Create an issue in this repository
 
 ---
+
+**Made with ❤️ for poker enthusiasts**
