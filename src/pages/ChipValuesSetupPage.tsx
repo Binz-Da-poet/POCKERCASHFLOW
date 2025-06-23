@@ -177,12 +177,12 @@ export const ChipValuesSetupPage: React.FC = () => {
   )
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-3 sm:p-4'>
+    <div className='min-h-screen bg-gradient-to-br from-red-900 via-black to-red-900 p-3 sm:p-4'>
       <div className='max-w-sm sm:max-w-4xl mx-auto'>
         <div className='text-center mb-6 sm:mb-8'>
           <h1 className='text-2xl sm:text-3xl font-bold text-white mb-2'>Thiết lập giá trị Chip</h1>
-          <p className='text-sm sm:text-base text-blue-100 px-2'>Cấu hình giá trị và số lượng cho từng loại chip</p>
-          <div className='mt-3 p-3 bg-blue-600/20 rounded-lg'>
+          <p className='text-sm sm:text-base text-red-100 px-2'>Cấu hình giá trị và số lượng cho từng loại chip</p>
+          <div className='mt-3 p-3 bg-red-600/20 rounded-lg'>
             <div className='text-white font-medium text-sm sm:text-base'>
               Mục tiêu: Tổng giá trị chip = {formatMoney(gameState.buyinAmount)}
             </div>

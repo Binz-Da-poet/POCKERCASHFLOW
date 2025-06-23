@@ -7,7 +7,7 @@ import type { ChipCounts } from './chipTypes'
 /**
  * Loại giao dịch
  */
-export type TransactionType = 'buyin' | 'transfer' | 'advance'
+export type TransactionType = 'buyin' | 'transfer' | 'advance' | 'repay'
 
 /**
  * Thông tin giao dịch
