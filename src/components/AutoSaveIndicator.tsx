@@ -87,34 +87,3 @@ export const AutoSaveIndicator: React.FC<AutoSaveIndicatorProps> = ({
     </div>
   )
 }
-
-/**
- * Hook để quản lý auto-save indicator
- */
-export const useAutoSaveIndicator = () => {
-  const [status, setStatus] = useState<'saving' | 'saved' | 'error'>('saved')
-  const [message, setMessage] = useState<string>('')
-
-  const showSaving = (msg?: string) => {
-    setStatus('saving')
-    setMessage(msg || 'Đang lưu...')
-  }
-
-  const showSaved = (msg?: string) => {
-    setStatus('saved')
-    setMessage(msg || 'Đã lưu tự động')
-  }
-
-  const showError = (msg?: string) => {
-    setStatus('error')
-    setMessage(msg || 'Lỗi khi lưu')
-  }
-
-  return {
-    status,
-    message,
-    showSaving,
-    showSaved,
-    showError
-  }
-}

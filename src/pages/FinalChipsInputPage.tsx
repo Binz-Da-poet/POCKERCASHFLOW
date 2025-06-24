@@ -4,19 +4,19 @@
  */
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { CHIP_IMAGES } from '../assets'
 import { formatMoney } from '../utils/formatters'
-import { CHIP_NAMES } from '../types'
+import { CHIP_NAMES, GAME_STATUS } from '../types'
 import type { ChipCounts, ChipColor } from '../types'
 import { Target, CheckCircle, AlertTriangle, DollarSign } from 'lucide-react'
 
 const INIT_CHIPS: ChipCounts = { white: 0, red: 0, green: 0, blue: 0, black: 0 }
 
 export const FinalChipsInputPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, updatePlayerFinalChips } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
   const [currentChips, setCurrentChips] = useState<ChipCounts>(() => {
     const player = gameState.players[0]
@@ -151,7 +151,7 @@ export const FinalChipsInputPage: React.FC = () => {
         return
       }
 
-      navigate('/final-results')
+      updateStatusAndNavigate(GAME_STATUS.FINAL_RESULTS)
     }
   }, [
     currentPlayer,
@@ -160,7 +160,7 @@ export const FinalChipsInputPage: React.FC = () => {
     gameState.players,
     gameState.chipValues,
     updatePlayerFinalChips,
-    navigate,
+    updateStatusAndNavigate,
     totalInvestment
   ])
 
@@ -170,9 +170,9 @@ export const FinalChipsInputPage: React.FC = () => {
       setCurrentPlayerIndex((prev) => prev - 1)
       setCurrentChips(prevPlayer?.finalChips ? { ...prevPlayer.finalChips } : { ...INIT_CHIPS })
     } else {
-      navigate('/game-playing')
+      updateStatusAndNavigate(GAME_STATUS.PLAYING)
     }
-  }, [currentPlayerIndex, gameState.players, navigate])
+  }, [currentPlayerIndex, gameState.players, updateStatusAndNavigate])
 
   //  dùng useMemo để tránh tính lại không cần thiết
   const totalValue = useMemo(() => {

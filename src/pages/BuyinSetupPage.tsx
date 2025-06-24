@@ -4,16 +4,17 @@
  */
 
 import React, { useCallback, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { isValidPositiveNumber } from '../utils/formatters'
 import { DollarSign, ArrowRight, Plus, Wallet, RotateCcw } from 'lucide-react'
 import BuyInBg from '../assets/background/buyIn.png'
 import { clearAppStorage } from '../hooks/useLocalStorage'
+import { GAME_STATUS } from '../types'
 
 export const BuyinSetupPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, setBuyinAmount } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [inputValue, setInputValue] = React.useState(() =>
     gameState.buyinAmount > 0 ? gameState.buyinAmount.toString() : '500'
   )
@@ -23,9 +24,9 @@ export const BuyinSetupPage: React.FC = () => {
     const amount = parseInt(inputValue)
     if (isValidPositiveNumber(inputValue) && amount > 0) {
       setBuyinAmount(amount)
-      navigate('/chip-values-setup')
+      updateStatusAndNavigate(GAME_STATUS.CHIP_VALUES_SETUP)
     }
-  }, [inputValue, setBuyinAmount, navigate])
+  }, [inputValue, setBuyinAmount, updateStatusAndNavigate])
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     // Chỉ cho phép số nguyên dương, loại bỏ ký tự không hợp lệ

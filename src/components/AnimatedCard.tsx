@@ -70,18 +70,6 @@ export const AnimatedCard = memo<AnimatedCardProps>(
 
 AnimatedCard.displayName = 'AnimatedCard'
 
-// Specialized card components
-export const ChipCard = memo<Omit<AnimatedCardProps, 'variant'>>((props) => <AnimatedCard {...props} variant='chip' />)
-ChipCard.displayName = 'ChipCard'
-
-export const MoneyCard = memo<Omit<AnimatedCardProps, 'variant'>>((props) => (
-  <AnimatedCard {...props} variant='money' />
-))
-MoneyCard.displayName = 'MoneyCard'
-
-export const PokerCard = memo<Omit<AnimatedCardProps, 'variant'>>((props) => <AnimatedCard {...props} variant='card' />)
-PokerCard.displayName = 'PokerCard'
-
 export const GlowCard = memo<Omit<AnimatedCardProps, 'variant'>>((props) => <AnimatedCard {...props} variant='glow' />)
 GlowCard.displayName = 'GlowCard'
 

@@ -1,5 +1,5 @@
 /**
- * Modal transfer chip giữa các người chơi - Phiên bản đơn giản
+ * Modal transfer chip giữa các người chơi 
  */
 
 import React, { useState, useCallback, useEffect } from 'react'

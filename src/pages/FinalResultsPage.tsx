@@ -4,15 +4,15 @@
  */
 
 import React, { useMemo, useCallback, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
-
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { formatMoney } from '../utils/formatters'
+import { GAME_STATUS } from '../types'
 import { Trophy, Medal, Award, RotateCcw, TrendingUp, TrendingDown } from 'lucide-react'
 
 export const FinalResultsPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, getSettlementResults, resetGame } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [showDetails, setShowDetails] = useState(false)
 
   const results = useMemo(() => getSettlementResults(), [getSettlementResults])
@@ -20,8 +20,8 @@ export const FinalResultsPage: React.FC = () => {
 
   const handleNewGame = useCallback(() => {
     resetGame()
-    navigate('/buyin-setup')
-  }, [resetGame, navigate])
+    updateStatusAndNavigate(GAME_STATUS.BUYIN_SETUP)
+  }, [resetGame, updateStatusAndNavigate])
 
   const getRankIcon = useCallback((index: number) => {
     switch (index) {

@@ -4,29 +4,30 @@
  */
 
 import React, { useCallback, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { ChipDisplayList } from '../components/ChipDisplay'
 import { ChipTransferModal } from '../components/ChipTransferModal'
 import { formatMoney } from '../utils/formatters'
+import { GAME_STATUS } from '../types'
 import type { ChipCounts } from '../types'
 import { Banknote, RotateCcw, ArrowLeftRight, Receipt, ArrowDownLeft } from 'lucide-react'
 
 export const GamePlayingPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, handleBankOperation, resetGame } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false)
   const [selectedFromPlayerId, setSelectedFromPlayerId] = useState<number | null>(null)
   const [modalKey, setModalKey] = useState(0)
 
   //  dùng useCallback để tránh tạo lại hàm không cần thiết
   const handleNext = useCallback(() => {
-    navigate('/final-chips-input')
-  }, [navigate])
+    updateStatusAndNavigate(GAME_STATUS.FINAL_CHIPS_INPUT)
+  }, [updateStatusAndNavigate])
 
   const handleBack = useCallback(() => {
-    navigate('/players-setup')
-  }, [navigate])
+    updateStatusAndNavigate(GAME_STATUS.PLAYERS_SETUP)
+  }, [updateStatusAndNavigate])
 
   const handleAdvance = useCallback(
     (playerId: number, amount: number) => {

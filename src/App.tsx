@@ -6,14 +6,10 @@
 
 import { BrowserRouter } from 'react-router-dom'
 import { GameStateProvider } from './hooks/useGameState'
+import { GameStatusRedirectWrapper } from './hooks/useGameStatusRedirect'
 import { AutoSaveIndicator } from './components/AutoSaveIndicator'
 import AppRoutes from './routes'
 import './App.css'
-
-// Import localStorage test trong development
-if (process.env.NODE_ENV === 'development') {
-  import('./utils/storageTest')
-}
 
 /**
  * Component App chính của ứng dụng
@@ -35,8 +31,10 @@ function App() {
   return (
     <BrowserRouter>
       <GameStateProvider>
-        <AppRoutes />
-        <AutoSaveIndicator status='saved' />
+        <GameStatusRedirectWrapper>
+          <AppRoutes />
+          <AutoSaveIndicator status='saved' />
+        </GameStatusRedirectWrapper>
       </GameStateProvider>
     </BrowserRouter>
   )

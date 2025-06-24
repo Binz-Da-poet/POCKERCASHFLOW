@@ -2,8 +2,7 @@
  * Export central cho tất cả types của ứng dụng Poker Money Calculator
  */
 
-// Game phases
-export * from './gamePhases'
+
 
 // Chip types
 export * from './chipTypes'
@@ -21,19 +20,7 @@ export * from './gameState'
  * Định nghĩa các types chung cho ứng dụng Poker Money Calculator
  */
 
-/**
- * Các giai đoạn của game
- */
-export const GAME_PHASES = {
-  BUYIN_SETUP: 'BUYIN_SETUP',
-  CHIP_VALUES_SETUP: 'CHIP_VALUES_SETUP',
-  PLAYERS_SETUP: 'PLAYERS_SETUP',
-  PLAYING: 'PLAYING',
-  FINAL_CHIPS_INPUT: 'FINAL_CHIPS_INPUT',
-  FINAL_RESULTS: 'FINAL_RESULTS'
-} as const
 
-export type GamePhase = (typeof GAME_PHASES)[keyof typeof GAME_PHASES]
 
 /**
  * Các màu chip
@@ -115,14 +102,4 @@ export interface Transaction {
   description: string
 }
 
-/**
- * State của game
- */
-export interface GameState {
-  gamePhase: GamePhase
-  buyinAmount: number
-  chipValues: ChipValues
-  chipCounts: ChipCounts
-  players: Player[]
-  transactions: Transaction[]
-}
+// GameState đã được export từ ./gameState

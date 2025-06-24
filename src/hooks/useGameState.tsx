@@ -3,8 +3,8 @@
  */
 
 import React, { createContext, useContext, useCallback } from 'react'
-import { DEFAULT_CHIP_VALUES, GAME_PHASES } from '../types'
-import type { GameState, GamePhase, ChipValues, ChipCounts, Player, Transaction } from '../types'
+import { DEFAULT_CHIP_VALUES, GAME_STATUS } from '../types'
+import type { GameState, GameStatus, ChipValues, ChipCounts, Player, Transaction } from '../types'
 import { useLocalStorage } from './useLocalStorage'
 
 /**
@@ -29,7 +29,7 @@ interface ChipTransfer {
  * Initial state của game
  */
 const initialGameState: GameState = {
-  gamePhase: GAME_PHASES.BUYIN_SETUP,
+  status: GAME_STATUS.BUYIN_SETUP,
   buyinAmount: 500,
   chipValues: DEFAULT_CHIP_VALUES,
   chipCounts: {
@@ -48,7 +48,7 @@ const initialGameState: GameState = {
  */
 interface GameStateContextType {
   gameState: GameState
-  setGamePhase: (phase: GamePhase) => void
+  setGameStatus: (status: GameStatus) => void
   setBuyinAmount: (amount: number) => void
   setChipValues: (values: ChipValues) => void
   setChipCounts: (counts: ChipCounts) => void
@@ -108,10 +108,10 @@ export const useGameState = () => {
   const [gameState, setGameState, clearGameState] = useLocalStorage<GameState>('pokerGameState', initialGameState)
 
   /**
-   * Set game phase
+   * Set game status
    */
-  const setGamePhase = useCallback((phase: GamePhase) => {
-    setGameState((prev) => ({ ...prev, gamePhase: phase }))
+  const setGameStatus = useCallback((status: GameStatus) => {
+    setGameState((prev) => ({ ...prev, status }))
   }, [])
 
   /**
@@ -409,7 +409,7 @@ export const useGameState = () => {
 
   return {
     gameState,
-    setGamePhase,
+    setGameStatus,
     setBuyinAmount,
     setChipValues,
     setChipCounts,

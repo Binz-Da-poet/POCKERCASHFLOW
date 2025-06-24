@@ -5,16 +5,16 @@
  */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { CHIP_IMAGES } from '../assets'
 import { formatMoney, isValidPositiveNumber } from '../utils/formatters'
-import { CHIP_NAMES, DEFAULT_CHIP_VALUES } from '../types'
+import { CHIP_NAMES, DEFAULT_CHIP_VALUES, GAME_STATUS } from '../types'
 import type { ChipValues, ChipCounts, ChipColor } from '../types'
 
 export const ChipValuesSetupPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, setChipValues, setChipCounts } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [chipValues, setLocalChipValues] = useState<ChipValues>(gameState.chipValues)
   const [chipCounts, setLocalChipCounts] = useState<ChipCounts>(gameState.chipCounts)
 
@@ -22,12 +22,12 @@ export const ChipValuesSetupPage: React.FC = () => {
   const handleNext = useCallback(() => {
     setChipValues(chipValues)
     setChipCounts(chipCounts)
-    navigate('/players-setup')
-  }, [chipValues, chipCounts, setChipValues, setChipCounts, navigate])
+    updateStatusAndNavigate(GAME_STATUS.PLAYERS_SETUP)
+  }, [chipValues, chipCounts, setChipValues, setChipCounts, updateStatusAndNavigate])
 
   const handleBack = useCallback(() => {
-    navigate('/buyin-setup')
-  }, [navigate])
+    updateStatusAndNavigate(GAME_STATUS.BUYIN_SETUP)
+  }, [updateStatusAndNavigate])
 
   // Hàm tự động điều chỉnh số lượng chip để tổng bằng buy-in
   const autoAdjustChipCounts = useCallback(

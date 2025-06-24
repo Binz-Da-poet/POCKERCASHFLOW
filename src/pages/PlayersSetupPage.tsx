@@ -4,16 +4,17 @@
  */
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useGameStateContext } from '../hooks/useGameState'
+import { useGameStatusRedirect } from '../hooks/useGameStatusRedirect'
 import { ChipDisplayList } from '../components/ChipDisplay'
 import { formatMoney } from '../utils/formatters'
+import { GAME_STATUS } from '../types'
 import type { ChipValues, ChipCounts } from '../types'
 import { Trash2, Plus, Users, AlertCircle } from 'lucide-react'
 
 export const PlayersSetupPage: React.FC = () => {
-  const navigate = useNavigate()
   const { gameState, addPlayer, removePlayer, updatePlayerName } = useGameStateContext()
+  const { updateStatusAndNavigate } = useGameStatusRedirect()
   const [newPlayerName, setNewPlayerName] = useState('')
   const [nameError, setNameError] = useState('')
 
@@ -47,13 +48,13 @@ export const PlayersSetupPage: React.FC = () => {
 
   const handleNext = useCallback(() => {
     if (gameState.players.length >= 2) {
-      navigate('/game-playing')
+      updateStatusAndNavigate(GAME_STATUS.PLAYING)
     }
-  }, [gameState.players.length, navigate])
+  }, [gameState.players.length, updateStatusAndNavigate])
 
   const handleBack = useCallback(() => {
-    navigate('/chip-values-setup')
-  }, [navigate])
+    updateStatusAndNavigate(GAME_STATUS.CHIP_VALUES_SETUP)
+  }, [updateStatusAndNavigate])
 
   const handleAddPlayer = useCallback(() => {
     const name = newPlayerName.trim()
