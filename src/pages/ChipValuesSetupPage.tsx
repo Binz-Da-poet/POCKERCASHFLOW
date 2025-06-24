@@ -14,7 +14,7 @@ import type { ChipValues, ChipCounts, ChipColor } from '../types'
 
 export const ChipValuesSetupPage: React.FC = () => {
   const navigate = useNavigate()
-  const { gameState, setChipValues, setChipCounts } = useGameStateContext()
+  const { gameState,setGamePhase, setChipValues, setChipCounts } = useGameStateContext()
   const [chipValues, setLocalChipValues] = useState<ChipValues>(gameState.chipValues)
   const [chipCounts, setLocalChipCounts] = useState<ChipCounts>(gameState.chipCounts)
 
@@ -22,10 +22,12 @@ export const ChipValuesSetupPage: React.FC = () => {
   const handleNext = useCallback(() => {
     setChipValues(chipValues)
     setChipCounts(chipCounts)
+    setGamePhase('PLAYERS_SETUP') // Chuyển sang bước thiết lập người chơi
     navigate('/players-setup')
   }, [chipValues, chipCounts, setChipValues, setChipCounts, navigate])
 
   const handleBack = useCallback(() => {
+    setGamePhase('BUYIN_SETUP') // Quay lại
     navigate('/buyin-setup')
   }, [navigate])
 

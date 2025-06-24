@@ -13,7 +13,7 @@ import { clearAppStorage } from '../hooks/useLocalStorage'
 
 export const BuyinSetupPage: React.FC = () => {
   const navigate = useNavigate()
-  const { gameState, setBuyinAmount } = useGameStateContext()
+  const { gameState,setGamePhase, setBuyinAmount } = useGameStateContext()
   const [inputValue, setInputValue] = React.useState(() =>
     gameState.buyinAmount > 0 ? gameState.buyinAmount.toString() : '500'
   )
@@ -23,6 +23,7 @@ export const BuyinSetupPage: React.FC = () => {
     const amount = parseInt(inputValue)
     if (isValidPositiveNumber(inputValue) && amount > 0) {
       setBuyinAmount(amount)
+      setGamePhase('CHIP_VALUES_SETUP') // Chuyển sang bước thiết lập giá trị chip
       navigate('/chip-values-setup')
     }
   }, [inputValue, setBuyinAmount, navigate])

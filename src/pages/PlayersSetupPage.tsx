@@ -13,7 +13,7 @@ import { Trash2, Plus, Users, AlertCircle } from 'lucide-react'
 
 export const PlayersSetupPage: React.FC = () => {
   const navigate = useNavigate()
-  const { gameState, addPlayer, removePlayer, updatePlayerName } = useGameStateContext()
+  const { gameState,setGamePhase, addPlayer, removePlayer, updatePlayerName } = useGameStateContext()
   const [newPlayerName, setNewPlayerName] = useState('')
   const [nameError, setNameError] = useState('')
 
@@ -47,11 +47,13 @@ export const PlayersSetupPage: React.FC = () => {
 
   const handleNext = useCallback(() => {
     if (gameState.players.length >= 2) {
+      setGamePhase('PLAYING') // Cập nhật giai đoạn game
       navigate('/game-playing')
     }
   }, [gameState.players.length, navigate])
 
   const handleBack = useCallback(() => {
+    setGamePhase('CHIP_VALUES_SETUP') // Quay lại 
     navigate('/chip-values-setup')
   }, [navigate])
 

@@ -16,7 +16,7 @@ const INIT_CHIPS: ChipCounts = { white: 0, red: 0, green: 0, blue: 0, black: 0 }
 
 export const FinalChipsInputPage: React.FC = () => {
   const navigate = useNavigate()
-  const { gameState, updatePlayerFinalChips } = useGameStateContext()
+  const { gameState,setGamePhase, updatePlayerFinalChips } = useGameStateContext()
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0)
   const [currentChips, setCurrentChips] = useState<ChipCounts>(() => {
     const player = gameState.players[0]
@@ -150,7 +150,7 @@ export const FinalChipsInputPage: React.FC = () => {
         )
         return
       }
-
+      setGamePhase('FINAL_RESULTS'); // Cập nhật giai đoạn game
       navigate('/final-results')
     }
   }, [
@@ -170,6 +170,7 @@ export const FinalChipsInputPage: React.FC = () => {
       setCurrentPlayerIndex((prev) => prev - 1)
       setCurrentChips(prevPlayer?.finalChips ? { ...prevPlayer.finalChips } : { ...INIT_CHIPS })
     } else {
+      setGamePhase('PLAYING');  // Quay lại 
       navigate('/game-playing')
     }
   }, [currentPlayerIndex, gameState.players, navigate])
