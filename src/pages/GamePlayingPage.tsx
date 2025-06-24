@@ -14,17 +14,19 @@ import { Banknote, RotateCcw, ArrowLeftRight, Receipt, ArrowDownLeft } from 'luc
 
 export const GamePlayingPage: React.FC = () => {
   const navigate = useNavigate()
-  const { gameState, handleBankOperation, resetGame } = useGameStateContext()
+  const { gameState,setGamePhase, handleBankOperation, resetGame } = useGameStateContext()
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false)
   const [selectedFromPlayerId, setSelectedFromPlayerId] = useState<number | null>(null)
   const [modalKey, setModalKey] = useState(0)
 
   //  dùng useCallback để tránh tạo lại hàm không cần thiết
   const handleNext = useCallback(() => {
+    setGamePhase('FINAL_CHIPS_INPUT')  // Chuyển hướng đến trang nhập chip cuối cùng
     navigate('/final-chips-input')
   }, [navigate])
 
   const handleBack = useCallback(() => {
+    setGamePhase('PLAYERS_SETUP')  // Quay lại 
     navigate('/players-setup')
   }, [navigate])
 
